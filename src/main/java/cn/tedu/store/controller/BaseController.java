@@ -4,6 +4,8 @@ import cn.tedu.store.service.exception.*;
 import cn.tedu.store.utils.JsonResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.servlet.http.HttpSession;
+
 
 /**
  * @author LeafDust
@@ -22,9 +24,9 @@ public abstract class BaseController {
      */
     protected static final int REG_FAILED = 4000;
     /**
-     * 未知异常状态码：5000
+     * 插入数据异常状态码：5000
      */
-    protected static final int UNKNOW_STATE = 5000;
+    protected static final int INSERT_ERROR = 5000;
     /**
      * 用户不存在状态码：4001
      */
@@ -33,6 +35,30 @@ public abstract class BaseController {
      * 用户不存在状态码：4002
      */
     protected static final int NOT_MATCH = 4002;
+    /**
+     * 更新密码异常：5001
+     */
+    protected static final int UPDATE_ERROR = 5001;
+
+    /**
+     * 从session中获取用户uid
+     *
+     * @param session session对象
+     * @return 用户的uid
+     */
+    Integer getUidFromSession(HttpSession session) {
+        return Integer.valueOf(session.getAttribute("uid").toString());
+    }
+
+    /**
+     * 从session中获取用户名
+     *
+     * @param session session对象
+     * @return 用户的用户名
+     */
+    String getUsernameFromSession(HttpSession session){
+        return session.getAttribute("username").toString();
+    }
 
     //只能捕捉ServiceException及其子类异常
     @ExceptionHandler(ServiceException.class)
@@ -44,8 +70,8 @@ public abstract class BaseController {
                 jsonResult.setState(REG_FAILED);
                 break;
             case "InsertException":
-                //未知错误响应码
-                jsonResult.setState(UNKNOW_STATE);
+                //插入数据异常
+                jsonResult.setState(INSERT_ERROR);
                 break;
             case "UserNotFoundException":
                 //用户不存在异常
@@ -54,6 +80,10 @@ public abstract class BaseController {
             case "PasswordNotMatchException":
                 //密码不匹配
                 jsonResult.setState(NOT_MATCH);
+                break;
+            case "UpdateException":
+                //更新密码异常
+                jsonResult.setState(UPDATE_ERROR);
                 break;
         }
         return jsonResult;

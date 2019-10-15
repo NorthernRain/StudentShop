@@ -2,6 +2,8 @@ package cn.tedu.store.service;
 
 import cn.tedu.store.entity.User;
 
+import java.util.Date;
+
 /**
  * @author LeafDust
  * @create 2019-10-12 17:09
@@ -9,13 +11,14 @@ import cn.tedu.store.entity.User;
  */
 public interface IUserService {
     /**
-     * 用户注册
+     * 处理用户注册业务
      *
      * @param user 新用户数据
      */
     void reg(User user);
 
     /**
+     * 处理用户登录业务
      *
      * @param username 用户名
      * @param password 用户密码
@@ -23,5 +26,13 @@ public interface IUserService {
      */
     User login(String username, String password);
 
-
+    /**
+     * 处理用户修改密码业务
+     *
+     * @param uid         用户id
+     * @param username    用户名
+     * @param oldPassword 用户原始密码
+     * @param password    用户新密码
+     */
+    void changePassword(Integer uid, String username, String oldPassword, String password);
 }

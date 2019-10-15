@@ -3,8 +3,7 @@ package cn.tedu.store.service.impl;
 import java.util.Date;
 import java.util.UUID;
 
-import cn.tedu.store.service.exception.PasswordNotMatchException;
-import cn.tedu.store.service.exception.UserNotFoundException;
+import cn.tedu.store.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -12,8 +11,8 @@ import org.springframework.util.DigestUtils;
 import cn.tedu.store.entity.User;
 import cn.tedu.store.mapper.UserMapper;
 import cn.tedu.store.service.IUserService;
-import cn.tedu.store.service.exception.InsertException;
-import cn.tedu.store.service.exception.UsernameDuplicateException;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * 处理用户相关功能的业务层实现类
@@ -76,26 +75,23 @@ public class UserServiceImpl implements IUserService {
         // 根据参数username查询用户数据
         User result = userMapper.findByUsername(username);
         // 判断查询结果是否为null
-        if (result != null) {
-            // 判断查询结果中的isDelete是否为1,
-            if (result.getIsDelete() != 1) {
-                // 从查询结果中获取盐值
-                String salt = result.getSalt();
-                // 根据参数password和盐值得到加密后的密码(md5Password)
-                String md5Password = getMd5Password(password, salt);
-                // 判断查询结果中的密码与md5Password是否不一致
-                // 是：密码错误，抛出PasswordNotMatchException
-                if (!md5Password.equals(result.getPassword())) {
-                    throw new PasswordNotMatchException("密码不匹配");
-                }
-            }
-            //是：用户数据被标记为“已删除”，抛出UserNotFoundException
-            else {
-                throw new UserNotFoundException("该用户不存在！");
-            }
-        } else {
+        if (result == null) {
             // 是：没有与username匹配的数据，用户名不存在，抛出UserNotFoundException，并描述错误
             throw new UserNotFoundException("该用户不存在！");
+        }
+        // 判断查询结果中的isDelete是否为1,
+        if (result.getIsDelete() == 1) {
+            //是：用户数据被标记为“已删除”，抛出UserNotFoundException
+            throw new UserNotFoundException("该用户不存在！");
+        }
+        // 从查询结果中获取盐值
+        String salt = result.getSalt();
+        // 根据参数password和盐值得到加密后的密码(md5Password)
+        String md5Password = getMd5Password(password, salt);
+        // 判断查询结果中的密码与md5Password是否不一致
+        // 是：密码错误，抛出PasswordNotMatchException
+        if (!md5Password.equals(result.getPassword())) {
+            throw new PasswordNotMatchException("密码不匹配！");
         }
         // 创建新的User对象
         User user = new User();
@@ -105,6 +101,49 @@ public class UserServiceImpl implements IUserService {
         user.setAvatar(result.getAvatar());
         // 将新User对象返回
         return user;
+    }
+
+    /**
+     * 处理用户修改密码业务
+     *
+     * @param uid         用户id
+     * @param username    用户名
+     * @param oldPassword 用户原始密码
+     * @param password    用户新密码
+     */
+    @Override
+    public void changePassword(Integer uid, String username, String oldPassword, String password) {
+        // 根据参数uid查询用户数据
+        User result = userMapper.findByUid(uid);
+        // 判断查询结果是否为null
+        if (result == null) {
+            // 是：UserNotFoundException
+            throw new UserNotFoundException("该用户不存在！");
+        }
+        // 判断查询结果中的isDelete是否为1
+        // 是：UserNotFoundException
+        if (result.getIsDelete() == 1) {
+            throw new UserNotFoundException("该用户不存在！");
+        }
+
+        // 从查询结果中获取盐值
+        // 将参数oldPassword结合盐值加密得到oldMd5Password
+        String salt = result.getSalt();
+        String oldMd5Password = getMd5Password(oldPassword, salt);
+        // 判断查询结果中的password和oldMd5Password是否不一致
+        // 是：PasswordNotMatchException
+        if (!oldMd5Password.equals(result.getPassword())) {
+            throw new PasswordNotMatchException("密码不匹配！");
+        }
+        // 将参数newPassword结合盐值加密得到newMd5Password
+        String newMd5Password = getMd5Password(password, salt);
+        // 执行更新密码，获取操作的返回值
+        Integer rows = userMapper.updatePasswordByUid(uid, newMd5Password, username, new Date());
+        // 判断返回的受影响行数是否不为1
+        // 是：UpdateException
+        if (rows != 1) {
+            throw new UpdateException("更新密码时遇到未知错误！请及时联系系统管理员！");
+        }
     }
 
     /**

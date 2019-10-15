@@ -38,11 +38,13 @@ public class UserServiceTests {
     @Test
     public void loginTest() {
         try {
-            String username = "Saber";
+            Integer uid=5;
+            String username = "root";
+            String oldPassword="1234";
             String password = "12345";
-            User user = service.login(username, password);
-            System.err.println(user);
+            service.changePassword(uid,username,oldPassword,password);
         } catch (Exception e) {
+            e.printStackTrace();
             System.err.println(e.getClass());
         }
     }
