@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.UserMapper">
+    <resultMap id="UserEntityMap" type="cn.tedu.store.entity.User">
+        <id column="uid" property="uid"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="created_user" property="createdUser"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="modified_user" property="modifiedUser"/>
+        <result column="modified_time" property="modifiedTime"/>
+    </resultMap>
+    <!--插入用户数据-->
+    <!--
+    Integer insert(User user);
+    -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+        INSERT INTO user(
+        username,password,salt,gender,
+        phone,email,avatar,is_delete,
+        created_user,created_time,modified_user,modified_time
+        )
+        VALUES(
+        #{username},#{password},#{salt},#{gender},
+        #{phone},#{email},#{avatar},#{isDelete},
+        #{createdUser},#{createdTime},#{modifiedUser},#{modifiedTime}
+        )
+    </insert>
+
+    <!--根据uid更新密码等信息-->
+    <!--
+    Integer updatePasswordByUid(@Param("uid") Integer uid,
+                                @Param("password") String password,
+                                @Param("modifiedUser") String modifiedUser,
+                                @Param("modifiedTime") String modifiedTime);
+                                -->
+    <update id="updatePasswordByUid">
+        UPDATE user
+        SET
+        password=#{password},modified_user=#{modifiedUser},modified_time=#{modifiedTime}
+        WHERE uid=#{uid}
+
+    </update>
+
+    <!--根据用户名查询用户数据-->
+    <!--
+     User findByUsername(String username);
+    -->
+    <select id="findByUsername" resultMap="UserEntityMap">
+        SELECT * FROM user WHERE username=#{username}
+    </select>
+
+    <!--根据uid查询用户数据-->
+    <!--
+    User findByUid(Integer uid);
+    -->
+    <select id="findByUid" resultType="cn.tedu.store.entity.User">
+        SELECT * FROM user WHERE uid=#{uid}
+    </select>
+</mapper>
+
