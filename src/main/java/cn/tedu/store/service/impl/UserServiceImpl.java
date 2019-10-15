@@ -115,6 +115,7 @@ public class UserServiceImpl implements IUserService {
     public void changePassword(Integer uid, String username, String oldPassword, String password) {
         // 根据参数uid查询用户数据
         User result = userMapper.findByUid(uid);
+        System.err.println(result);
         // 判断查询结果是否为null
         if (result == null) {
             // 是：UserNotFoundException
