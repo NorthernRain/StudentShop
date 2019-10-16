@@ -75,4 +75,40 @@ public class UserController extends BaseController {
         return new JsonResult<Void>(SUCCESS);
     }
 
+    /**
+     * 获取用户数据展示在资料页
+     *
+     * @param session session对象
+     * @return json对象
+     */
+    @GetMapping("get_info")
+    public JsonResult<User> getInfoByUid(HttpSession session) {
+        User user = service.getInfoByUid(getUidFromSession(session));
+        return new JsonResult<User>(SUCCESS, user);
+    }
+
+    /**
+     * 修改用户资料
+     *
+     * @param user    获取客户端传回来的用户数据
+     * @param session session对象
+     * @return json对象
+     */
+    @PostMapping("change_info")
+    public JsonResult<Void> changeInfoByUid(User user, HttpSession session) {
+        service.changeInfo(getUidFromSession(session), getUsernameFromSession(session), user);
+        return new JsonResult<>(SUCCESS);
+    }
+
+    /**
+     * 登出
+     * @param session session对象
+     * @return json对象
+     */
+    @GetMapping("logout")
+    public JsonResult<Void> logout(HttpSession session) {
+        System.err.println("sessionInvalidate");
+        session.invalidate();
+        return new JsonResult<>(SUCCESS);
+    }
 }

@@ -33,17 +33,11 @@ public interface UserMapper {
                                 @Param("modifiedTime") Date modifiedTime);
 
     /**
-     * 根据uid修改用户的资料
-     * @param uid
-     * @param gender
-     * @param phone
-     * @param email
-     * @return
+     * 修改用户资料
+     * @param user 用户对象
+     * @return 操作成功的行数
      */
-        Integer updateInfoByUid(@Param("uid") Integer uid,
-                                @Param("gender") Integer gender,
-                                @Param("phone") String phone,
-                                @Param("email") String email);
+    Integer updateInfoByUid(User user);
 
     /**
      * 通过用户名查找用户数据

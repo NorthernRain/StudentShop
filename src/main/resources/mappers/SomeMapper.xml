@@ -18,21 +18,21 @@
     -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO
-            user(
-            username,password,
-            salt,gender,
-            phone,email,
-            avatar,is_delete,
-            created_user,created_time,
-            modified_user,modified_time
-            )
+        user(
+        username,password,
+        salt,gender,
+        phone,email,
+        avatar,is_delete,
+        created_user,created_time,
+        modified_user,modified_time
+        )
         VALUES(
-            #{username},#{password},
-            #{salt},#{gender},
-            #{phone},#{email},
-            #{avatar},#{isDelete},
-            #{createdUser},#{createdTime},
-            #{modifiedUser},#{modifiedTime}
+        #{username},#{password},
+        #{salt},#{gender},
+        #{phone},#{email},
+        #{avatar},#{isDelete},
+        #{createdUser},#{createdTime},
+        #{modifiedUser},#{modifiedTime}
         )
     </insert>
 
@@ -45,14 +45,34 @@
                                 -->
     <update id="updatePasswordByUid">
         UPDATE
-            user
+        user
         SET
-            password=#{password},
-            modified_user=#{modifiedUser},
-            modified_time=#{modifiedTime}
+        password=#{password},
+        modified_user=#{modifiedUser},
+        modified_time=#{modifiedTime}
         WHERE
-            uid=#{uid}
+        uid=#{uid}
+    </update>
 
+    <!--修改用户资料-->
+    <!--
+    Integer updateInfoByUid(@Param("uid") Integer uid,
+                            @Param("gender") Integer gender,
+                            @Param("phone") String phone,
+                            @Param("email") String email);
+    -->
+
+    <update id="updateInfoByUid">
+        UPDATE
+        user
+        SET
+        gender=#{gender},
+        phone=#{phone},
+        email=#{email},
+        modified_user=#{modifiedUser},
+        modified_time=#{modifiedTime}
+        WHERE
+        uid=#{uid}
     </update>
 
     <!--根据用户名查询用户数据-->
@@ -61,9 +81,9 @@
     -->
     <select id="findByUsername" resultMap="UserEntityMap">
         SELECT * FROM
-            user
+        user
         WHERE
-            username=#{username}
+        username=#{username}
     </select>
 
     <!--根据uid查询用户数据-->
@@ -72,9 +92,9 @@
     -->
     <select id="findByUid" resultMap="UserEntityMap">
         SELECT * FROM
-            user
+        user
         WHERE
-            uid=#{uid}
+        uid=#{uid}
     </select>
 </mapper>
 

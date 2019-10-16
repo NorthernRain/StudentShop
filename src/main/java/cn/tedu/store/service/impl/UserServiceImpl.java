@@ -116,7 +116,6 @@ public class UserServiceImpl implements IUserService {
     public void changePassword(Integer uid, String username, String oldPassword, String password) {
         // 根据参数uid查询用户数据
         User result = userMapper.findByUid(uid);
-        System.err.println(result);
         // 判断查询结果是否为null
         if (result == null) {
             // 是：UserNotFoundException
@@ -149,6 +148,69 @@ public class UserServiceImpl implements IUserService {
     }
 
     /**
+     * 获取用户数据
+     *
+     * @param uid 用户uid
+     * @return
+     */
+    @Override
+    public User getInfoByUid(Integer uid) {
+        // 根据参数uid查询用户数据
+        User result = userMapper.findByUid(uid);
+        // 判断查询结果是否为null
+        if (result == null) {
+            // 是：UserNotFoundException
+            throw new UserNotFoundException("该用户不存在！");
+        }
+        // 判断查询结果中的isDelete是否为1
+        // 是：UserNotFoundException
+        if (result.getIsDelete() == 1) {
+            throw new UserNotFoundException("该用户不存在！");
+        }
+        //创建新的user对象，并将phone，email，gender封装进去
+        User user = new User();
+        user.setUsername(result.getUsername());
+        user.setPhone(result.getPhone());
+        user.setEmail(result.getEmail());
+        user.setGender(result.getGender());
+        return user;
+    }
+
+    /**
+     * 修改用户资料
+     *
+     * @param uid      用户uid
+     * @param username 用户名
+     * @param user     用户对象
+     */
+    @Override
+    public void changeInfo(Integer uid, String username, User user) {
+        // 根据参数uid查询用户数据
+        User result = userMapper.findByUid(uid);
+        // 判断查询结果是否为null
+        if (result == null) {
+            // 是：UserNotFoundException
+            throw new UserNotFoundException("该用户不存在！");
+        }
+        // 判断查询结果中的isDelete是否为1
+        // 是：UserNotFoundException
+        if (result.getIsDelete() == 1) {
+            throw new UserNotFoundException("该用户不存在！");
+        }
+        user.setUid(uid);
+        user.setUsername(username);
+        user.setModifiedUser(username);
+        user.setModifiedTime(new Date());
+        //修改用户资料
+        Integer rows = userMapper.updateInfoByUid(user);
+        if (rows != 1) {
+            throw new UpdateException("更新资料出现未知错误！请及时联系管理员！");
+        }
+
+    }
+
+
+    /**
      * 执行加密
      *
      * @param password 原始密码
@@ -163,6 +225,4 @@ public class UserServiceImpl implements IUserService {
         }
         return password;
     }
-
-
 }

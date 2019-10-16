@@ -1,4 +1,4 @@
-package cn.tedu.store.config.LoginInterceptorConfigurer;
+package cn.tedu.store.config;
 
 import cn.tedu.store.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
