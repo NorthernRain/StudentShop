@@ -4,9 +4,7 @@ import cn.tedu.store.entity.User;
 import cn.tedu.store.service.IUserService;
 import cn.tedu.store.utils.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -28,7 +26,7 @@ public class UserController extends BaseController {
      * @param user 客户端传回来的用户数据
      * @return
      */
-    @RequestMapping("reg")
+    @PostMapping("reg")
     public JsonResult<Void> reg(User user) {
         System.err.println(user);
         //注册成功
@@ -44,7 +42,7 @@ public class UserController extends BaseController {
      * @param password 客户端传回来的用户密码
      * @return
      */
-    @RequestMapping("login")
+    @PostMapping("login")
     public JsonResult<User> login(String username, String password, HttpSession session) {
         //登录成功
         User result = service.login(username, password);
@@ -63,7 +61,7 @@ public class UserController extends BaseController {
      * @param session     session对象
      * @return
      */
-    @RequestMapping("change_password")
+    @PostMapping("change_password")
     public JsonResult<Void> changePassword
     (@RequestParam("old_password") String oldPassword,
      @RequestParam("new_password") String newPassword,

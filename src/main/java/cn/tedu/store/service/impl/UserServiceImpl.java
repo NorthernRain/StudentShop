@@ -3,6 +3,8 @@ package cn.tedu.store.service.impl;
 import java.util.Date;
 import java.util.UUID;
 
+import java.lang.String;
+
 import cn.tedu.store.service.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +14,6 @@ import cn.tedu.store.entity.User;
 import cn.tedu.store.mapper.UserMapper;
 import cn.tedu.store.service.IUserService;
 
-import javax.servlet.http.HttpSession;
 
 /**
  * 处理用户相关功能的业务层实现类
@@ -26,7 +27,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void reg(User user) {
         // 从参数user中获取username
-        String username = user.getUsername();
+        java.lang.String username = user.getUsername();
         // 根据username查询用户数据：User result = userMapper.findByUsername(username)
         User result = userMapper.findByUsername(username);
         // 判断查询结果是否不为null

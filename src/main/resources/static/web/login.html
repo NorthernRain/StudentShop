@@ -163,16 +163,9 @@
                 "type": "post",
                 "dataType": "json",
                 "success": function (json) {
-                    if (json.state == 2000) {
-                        var time = 5;
-                        setInterval(function () {
-                            $("#username-hint").html(time + "<a href='index.html'>秒后自动跳转到首页！</a>");
-                            time--;
-                            if (time == 0) {
-                                location.href = "index.html";
-                            }
-                        }, 1000);
 
+                    if (json.state == 2000) {
+                                location.href = "index.html";
                         /*setTimeout(function () {
                             location.href = "index.html";
                         }, 5000)*/
