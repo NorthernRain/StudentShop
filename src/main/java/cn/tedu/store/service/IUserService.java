@@ -38,6 +38,7 @@ public interface IUserService {
 
     /**
      * 根据uid获取用户信息并显示在资料页
+     *
      * @param uid 用户uid
      * @return user对象
      */
@@ -45,11 +46,19 @@ public interface IUserService {
 
     /**
      * 修改用户资料
-     * @param uid 用户uid
+     *
+     * @param uid      用户uid
      * @param username 用户名
-     * @param user 用户对象
+     * @param user     用户对象
      */
-    void changeInfo(Integer uid,String username,User user);
+    void changeInfo(Integer uid, String username, User user);
 
-
+    /**
+     * 修改用户头像
+     *
+     * @param uid        用户uid
+     * @param username   用户名
+     * @param avatarPath 头像储存路径
+     */
+    void changeAvatar(Integer uid, String username, String avatarPath);
 }

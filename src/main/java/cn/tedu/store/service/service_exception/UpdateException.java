@@ -1,4 +1,4 @@
-package cn.tedu.store.service.exception;
+package cn.tedu.store.service.service_exception;
 
 /**
  * @author LeafDust

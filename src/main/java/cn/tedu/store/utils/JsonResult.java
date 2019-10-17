@@ -26,11 +26,6 @@ public class JsonResult<T> {
         this.state = state;
     }
 
-    public JsonResult(Integer state, String message) {
-        this.state = state;
-        this.message = message;
-    }
-
     public JsonResult(Integer state, T data) {
         this.state = state;
         this.data = data;

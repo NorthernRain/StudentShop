@@ -149,6 +149,7 @@
 <!--页脚结束-->
 <script type="text/javascript">
     $("#loginBtn").click(function () {
+        $("#username-hint").empty();
         var username = $("#username").val();
         var pwd = $("#password").val();
         if (username == "") {

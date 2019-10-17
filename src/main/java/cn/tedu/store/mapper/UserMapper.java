@@ -34,10 +34,26 @@ public interface UserMapper {
 
     /**
      * 修改用户资料
+     *
      * @param user 用户对象
      * @return 操作成功的行数
      */
     Integer updateInfoByUid(User user);
+
+    /**
+     * 修改用户头像
+     *
+     * @param uid          用户uid
+     * @param avatar       用户头像图片的储存路径
+     * @param modifiedUser 修改人
+     * @param modifiedTime 修改时间
+     * @return 修改成功的行数
+     */
+    Integer updateAvatarByUid(@Param("uid") Integer uid,
+                              @Param("avatar") String avatar,
+                              @Param("modifiedUser") String modifiedUser,
+                              @Param("modifiedTime") Date modifiedTime);
+
 
     /**
      * 通过用户名查找用户数据

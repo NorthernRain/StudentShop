@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import java.lang.String;
 
-import cn.tedu.store.service.exception.*;
+import cn.tedu.store.service.service_exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -209,6 +209,32 @@ public class UserServiceImpl implements IUserService {
 
     }
 
+    /**
+     * 修改用户头像
+     *
+     * @param uid        用户uid
+     * @param username   用户名
+     * @param avatarPath 头像储存路径
+     */
+    @Override
+    public void changeAvatar(Integer uid, String username, String avatarPath) {
+        // 根据参数uid查询用户数据
+        User result = userMapper.findByUid(uid);
+        // 判断查询结果是否为null
+        if (result == null) {
+            // 是：UserNotFoundException
+            throw new UserNotFoundException("该用户不存在！");
+        }
+        // 判断查询结果中的isDelete是否为1
+        // 是：UserNotFoundException
+        if (result.getIsDelete() == 1) {
+            throw new UserNotFoundException("该用户不存在！");
+        }
+        Integer rows=userMapper.updateAvatarByUid(uid, avatarPath, username, new Date());
+        if (rows!=1){
+            throw new UpdateException("更新头像时遇到未知错误！请及时联系系统管理员！");
+        }
+    }
 
     /**
      * 执行加密

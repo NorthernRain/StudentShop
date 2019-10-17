@@ -163,10 +163,10 @@
                         <label class="col-md-2 control-label">性别：</label>
                         <div class="col-md-8">
                             <label class="radio-inline">
-                                <input type="radio" name="gender" value="0" checked id="radio-male">男
+                                <input type="radio" name="gender" value="1" id="radio-male">男
                             </label>
                             <label class="radio-inline">
-                                <input type="radio" name="gender" value="1" id="radio-female">女
+                                <input type="radio" name="gender" value="2" id="radio-female">女
                             </label>
                         </div>
                     </div>
@@ -292,7 +292,6 @@
                             break;
                         /*没有设置性别*/
                         default:
-                            $("#radio-male").prop("checked", "checked");
                             break;
                     }
                 } else {

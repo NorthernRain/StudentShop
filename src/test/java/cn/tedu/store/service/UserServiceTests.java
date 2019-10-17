@@ -1,7 +1,7 @@
 package cn.tedu.store.service;
 
 import cn.tedu.store.entity.User;
-import cn.tedu.store.service.exception.ServiceException;
+import cn.tedu.store.service.service_exception.ServiceException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,11 +38,10 @@ public class UserServiceTests {
     @Test
     public void loginTest() {
         try {
-            Integer uid=5;
+            Integer uid=2;
+            String avatar="D:/imag.jpg";
             String username = "root";
-            String oldPassword="1234";
-            String password = "12345";
-            service.changePassword(uid,username,oldPassword,password);
+            service.changeAvatar(uid,username,avatar);
         } catch (Exception e) {
             e.printStackTrace();
             System.err.println(e.getClass());

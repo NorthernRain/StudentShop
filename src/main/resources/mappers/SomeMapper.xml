@@ -75,6 +75,24 @@
         uid=#{uid}
     </update>
 
+    <!--修改用户头像-->
+    <!--Integer updateAvatarByUid(@Param("uid") Integer uid,
+                              @Param("avatar") String avatar,
+                              @Param("modifiedUser") String modifiedUser,
+                              @Param("modifiedTime") Date modifiedTime);
+-->
+    <update id="updateAvatarByUid">
+        UPDATE
+        user
+        SET
+        avatar=#{avatar},
+        modified_user=#{modifiedUser},
+        modified_time=#{modifiedTime}
+        WHERE
+        uid=#{uid}
+    </update>
+
+
     <!--根据用户名查询用户数据-->
     <!--
      User findByUsername(String username);
