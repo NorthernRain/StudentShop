@@ -16,7 +16,7 @@
     <!--
     Integer insert(User user);
     -->
-    <insert id="insert" useGeneratedKeys="true" keyProperty="uid">
+    <insert id="insertUser" useGeneratedKeys="true" keyProperty="uid">
         INSERT INTO
         user(
         username,password,
@@ -62,7 +62,7 @@
                             @Param("email") String email);
     -->
 
-    <update id="updateInfoByUid">
+    <update id="updateUserInfoByUid">
         UPDATE
         user
         SET
@@ -97,7 +97,7 @@
     <!--
      User findByUsername(String username);
     -->
-    <select id="findByUsername" resultMap="UserEntityMap">
+    <select id="findUserByUsername" resultMap="UserEntityMap">
         SELECT * FROM
         user
         WHERE
@@ -108,7 +108,7 @@
     <!--
     User findByUid(Integer uid);
     -->
-    <select id="findByUid" resultMap="UserEntityMap">
+    <select id="findUserByUid" resultMap="UserEntityMap">
         SELECT * FROM
         user
         WHERE

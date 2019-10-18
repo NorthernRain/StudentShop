@@ -29,7 +29,7 @@ public class UserServiceImpl implements IUserService {
         // 从参数user中获取username
         java.lang.String username = user.getUsername();
         // 根据username查询用户数据：User result = userMapper.findByUsername(username)
-        User result = userMapper.findByUsername(username);
+        User result = userMapper.findUserByUsername(username);
         // 判断查询结果是否不为null
         if (result != null) {
             // 抛出异常：throw new UsernameDuplicateException();
@@ -57,7 +57,7 @@ public class UserServiceImpl implements IUserService {
         user.setModifiedTime(date);
 
         // 执行插入用户数据，获取返回值：Integer rows = userMapper.insert(user)
-        Integer rows = userMapper.insert(user);
+        Integer rows = userMapper.insertUser(user);
         // 判断返回的受影响行数是否不为1
         if (rows != 1) {
             // 抛出异常：throw new InsertException();
@@ -74,7 +74,7 @@ public class UserServiceImpl implements IUserService {
      */
     public User login(String username, String password) {
         // 根据参数username查询用户数据
-        User result = userMapper.findByUsername(username);
+        User result = userMapper.findUserByUsername(username);
         // 判断查询结果是否为null
         if (result == null) {
             // 是：没有与username匹配的数据，用户名不存在，抛出UserNotFoundException，并描述错误
@@ -115,7 +115,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void changePassword(Integer uid, String username, String oldPassword, String password) {
         // 根据参数uid查询用户数据
-        User result = userMapper.findByUid(uid);
+        User result = userMapper.findUserByUid(uid);
         // 判断查询结果是否为null
         if (result == null) {
             // 是：UserNotFoundException
@@ -156,7 +156,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public User getInfoByUid(Integer uid) {
         // 根据参数uid查询用户数据
-        User result = userMapper.findByUid(uid);
+        User result = userMapper.findUserByUid(uid);
         // 判断查询结果是否为null
         if (result == null) {
             // 是：UserNotFoundException
@@ -186,7 +186,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void changeInfo(Integer uid, String username, User user) {
         // 根据参数uid查询用户数据
-        User result = userMapper.findByUid(uid);
+        User result = userMapper.findUserByUid(uid);
         // 判断查询结果是否为null
         if (result == null) {
             // 是：UserNotFoundException
@@ -202,7 +202,7 @@ public class UserServiceImpl implements IUserService {
         user.setModifiedUser(username);
         user.setModifiedTime(new Date());
         //修改用户资料
-        Integer rows = userMapper.updateInfoByUid(user);
+        Integer rows = userMapper.updateUserInfoByUid(user);
         if (rows != 1) {
             throw new UpdateException("更新资料出现未知错误！请及时联系管理员！");
         }
@@ -219,7 +219,7 @@ public class UserServiceImpl implements IUserService {
     @Override
     public void changeAvatar(Integer uid, String username, String avatarPath) {
         // 根据参数uid查询用户数据
-        User result = userMapper.findByUid(uid);
+        User result = userMapper.findUserByUid(uid);
         // 判断查询结果是否为null
         if (result == null) {
             // 是：UserNotFoundException

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.store.mapper.AddressMapper">
+    <!--插入用户收货地址信息-->
+    <!-- Integer insert(Address address);-->
+    <insert id="insert">
+        INSERT INTO
+        address(
+        uid,username,
+        province_name,province_code,
+        city_name,city_code,
+        district_name,district_code,
+        zip,address,
+        phone,tel,
+        tag,is_default,
+        created_user,created_time,
+        modified_user,modified_time)
+        VALUES(
+        #{uid},#{username},
+        #{province_name},#{province_code},
+        #{city_name},#{city_code},
+        #{district_name},#{district_code},
+        #{zip},#{address},
+        #{phone},#{tel},
+        #{tag},#{is_default},
+        #{created_user},#{created_time},
+        #{modified_user},#{modified_time}
+        );
+    </insert>
+
+    <!--统计用户已存在的收货地址条数-->
+    <!-- Integer countAddressByUid(Integer uid);-->
+    <select id="countAddressByUid">
+
+    </select>
+</mapper>
+

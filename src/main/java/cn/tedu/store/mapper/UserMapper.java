@@ -16,7 +16,7 @@ public interface UserMapper {
      * @param user
      * @return
      */
-    Integer insert(User user);
+    Integer insertUser(User user);
 
     /**
      * 修改密码
@@ -38,7 +38,7 @@ public interface UserMapper {
      * @param user 用户对象
      * @return 操作成功的行数
      */
-    Integer updateInfoByUid(User user);
+    Integer updateUserInfoByUid(User user);
 
     /**
      * 修改用户头像
@@ -61,7 +61,7 @@ public interface UserMapper {
      * @param username 用户名
      * @return user对象
      */
-    User findByUsername(String username);
+    User findUserByUsername(String username);
 
     /**
      * 通过uid查找用户数据
@@ -69,6 +69,6 @@ public interface UserMapper {
      * @param uid 用户uid
      * @return user对象
      */
-    User findByUid(Integer uid);
+    User findUserByUid(Integer uid);
 
 }

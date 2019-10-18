@@ -34,30 +34,6 @@ public abstract class BaseController {
      */
     protected static final Integer NOT_MATCH = 4002;
 
-    /**
-     * 文件为空状态码：4002
-     */
-    protected static final Integer FILE_EMPTY_ERROR = 4003;
-
-    /**
-     * 超出文件大小状态码：4002
-     */
-    protected static final Integer FILE_SIZE_ERROR = 4004;
-
-    /**
-     * 文件类型不匹配状态码：4002
-     */
-    protected static final Integer FILE_TYPE_ERROR = 4005;
-
-    /**
-     * 文件转换异常状态码：4002
-     */
-    protected static final Integer FILE_STATE_ERROR = 4006;
-
-    /**
-     * 文件读写异常状态码：4002
-     */
-    protected static final Integer FILE_IO_ERROR = 4007;
 
     /**
      * 插入数据异常状态码：5000
@@ -68,6 +44,31 @@ public abstract class BaseController {
      * 更新密码异常：5001
      */
     protected static final Integer UPDATE_ERROR = 5001;
+
+    /**
+     * 文件为空状态码：4002
+     */
+    protected static final Integer FILE_EMPTY_ERROR = 6000;
+
+    /**
+     * 超出文件大小状态码：4002
+     */
+    protected static final Integer FILE_SIZE_ERROR = 6001;
+
+    /**
+     * 文件类型不匹配状态码：4002
+     */
+    protected static final Integer FILE_TYPE_ERROR = 6002;
+
+    /**
+     * 文件转换异常状态码：4002
+     */
+    protected static final Integer FILE_STATE_ERROR = 6003;
+
+    /**
+     * 文件读写异常状态码：4002
+     */
+    protected static final Integer FILE_IO_ERROR = 6004;
 
     /**
      * 从session中获取用户uid

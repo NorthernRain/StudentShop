@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Map;
-
 /**
  * @author LeafDust
  * @create 2019-10-12 15:28
@@ -27,14 +25,14 @@ public class UserMapperTests {
         user.setGender(2);
         user.setPhone("13422519784");
         user.setEmail("saber@qq.com");
-        Integer rows = userMapper.insert(user);
+        Integer rows = userMapper.insertUser(user);
         System.err.println(rows + ":" + user);
     }
 
     @Test
     public void findByUsername() {
         String username = "Saber";
-        User user = userMapper.findByUsername(username);
+        User user = userMapper.findUserByUsername(username);
         System.err.println(user);
     }
 }

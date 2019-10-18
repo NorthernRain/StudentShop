@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +38,7 @@ public class UserController extends BaseController {
     public static final List<String> AVATAR_TYPES = new ArrayList<>();
 
     static {
-        AVATAR_TYPES.add("image/jpg");
+        AVATAR_TYPES.add("image/jpeg");
         AVATAR_TYPES.add("image/png");
         AVATAR_TYPES.add("image/gif");
         AVATAR_TYPES.add("image/bmp");
@@ -66,7 +69,7 @@ public class UserController extends BaseController {
      * @param password 客户端传回来的用户密码
      * @return
      */
-    @PostMapping("login")
+    @RequestMapping("login")
     public JsonResult<User> login(String username, String password, HttpSession session) {
         //登录成功
         User result = service.login(username, password);
@@ -131,9 +134,10 @@ public class UserController extends BaseController {
      * @return json对象
      */
     @GetMapping("logout")
-    public JsonResult<Void> logout(HttpSession session) {
+    public JsonResult<Void> logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception {
         System.err.println("sessionInvalidate");
         session.invalidate();
+        response.sendRedirect(request.getContextPath()+"/web/login.html");
         return new JsonResult<>(SUCCESS);
     }
 
@@ -180,6 +184,7 @@ public class UserController extends BaseController {
 
         //保存客户端上传的文件
         File dest = new File(parent, filename);
+        System.err.println(dest.getAbsolutePath());
 
         // 保存客户端上传的文件
         try {
@@ -191,7 +196,7 @@ public class UserController extends BaseController {
         }
 
         //将文件的路径储存到数据库中
-        String avatarPath = "/upload" + filename;
+        String avatarPath = "/upload/" + filename;
         Integer uid = getUidFromSession(session);
         String username = getUsernameFromSession(session);
         service.changeAvatar(uid, username, avatarPath);

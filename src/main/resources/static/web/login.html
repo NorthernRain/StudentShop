@@ -166,6 +166,15 @@
                 "success": function (json) {
 
                     if (json.state == 2000) {
+                        // 将头像路径存储到Cookie中
+                        let avatar = json.data.avatar;
+                        console.log("avatar=" + avatar);
+                        if (avatar == undefined) {
+                            $.cookie("avatar", "", {"expires": -1});
+                        } else {
+                            $.cookie("avatar", json.data.avatar, {"expires": 7});
+                        }
+
                                 location.href = "index.html";
                         /*setTimeout(function () {
                             location.href = "index.html";
